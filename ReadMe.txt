@@ -1,53 +1,8 @@
-File: ReadMe.txt
-
-Abstract: readme file for the SBSendEmail sample.
-
-Version: 1.0
-
-Disclaimer: IMPORTANT:  This Apple software is supplied to you by 
-Apple Inc. ("Apple") in consideration of your agreement to the
-following terms, and your use, installation, modification or
-redistribution of this Apple software constitutes acceptance of these
-terms.  If you do not agree with these terms, please do not use,
-install, modify or redistribute this Apple software.
-
-In consideration of your agreement to abide by the following terms, and
-subject to these terms, Apple grants you a personal, non-exclusive
-license, under Apple's copyrights in this original Apple software (the
-"Apple Software"), to use, reproduce, modify and redistribute the Apple
-Software, with or without modifications, in source and/or binary forms;
-provided that if you redistribute the Apple Software in its entirety and
-without modifications, you must retain this notice and the following
-text and disclaimers in all such redistributions of the Apple Software. 
-Neither the name, trademarks, service marks or logos of Apple Inc. 
-may be used to endorse or promote products derived from the Apple
-Software without specific prior written permission from Apple.  Except
-as expressly stated in this notice, no other rights or licenses, express
-or implied, are granted by Apple herein, including but not limited to
-any patent rights that may be infringed by your derivative works or by
-other works in which the Apple Software may be incorporated.
-
-The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
-MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
-THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
-FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
-OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
-
-IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
-OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
-MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
-AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
-STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
-POSSIBILITY OF SUCH DAMAGE.
-
-Copyright (C) 2008 Apple Inc. All Rights Reserved.
+SBSendEmail
+===========
 
 
-
-
-Introduction
+INTRODUCTION:
 
 This file details the steps involved in putting together a project that uses Scripting Bridge to send Apple events to the Mail application for the purposes of automatically sending emails.  The following details the steps involved in creating this sample.
 
@@ -66,11 +21,11 @@ This project comes with the Interface Builder .nib file and the Controller objec
 
 The first thing to do is to set up Xcode to automatically generate the Scripting Bridge source for the application you would like to target.  The following steps describe how you can do that:
 
-(a) Turn down the "Targets" tab in the "Groups & Files" list on the left hand side and select the main target.  In this sample,  select the "SBSendEmail" target.  
+(a) In the project navigator, choose the project file and select the "SBSendEmail" target.   
 
-(b) With the "SBSendEmail" target selected, open the information panel (by clicking on the Info icon, or by control- or right-clicking on the target name and selecting "Get Info" from the pop-up menu).
+(b)With the "SBSendEmail" target selected, switch to the "Build Rules" tab.
 
-(c) In the info window, click on the Rules tab and then click on the + button at the bottom to add a new rule.
+(c) In the build rules tab, click on the + button at the bottom to add a new rule.
 
 (d) Set up the new rule as follows:
 
@@ -88,7 +43,7 @@ The first thing to do is to set up Xcode to automatically generate the Scripting
 
 	NOTE: if you're typing this rule in by hand, note that it should all be one one line, and it must be typed exactly as shown above.  If you have difficulty entering the above command, then copy and paste the command from the readme into the rule.
 
-(e) All done.  You can close the info window.  Xcode is now set up to automatically generate Scripting Bridge source for any applications you add to your project.
+(e) All done.  Xcode is now set up to automatically generate Scripting Bridge source for any applications you add to your project.
 
 NOTE: this rule uses the sdef and sdp command line tools.  To learn more about these tools, use the following commands in the Terminal window:
    man sdp
@@ -105,21 +60,21 @@ You can drop the application among the source files you are using for your appli
 
 You should uncheck the 'Copy items into destination group's folder (if needed)' option so the application is not copied into your project directory.  In this sample we have selected 'Absolute Path' as the reference type so we can easily move the project around from machine to machine without invalidating the reference (so long as the Mail application is present in the System/Library/CoreServices folder,  Xcode will be able to find it).
 
-In this case, we are adding the Mail to our project.  The Mail application is located in the /System/Library/CoreServices folder.
+In this case, we are adding the Mail to our project.  The Mail application is located in the /Applications folder.
 
 
 
 
 4. Add the target application to the Compile Sources.
 
-After you have added the target application to your project, you must also add it to the main target's Compile Sources.  You can do that by adding the application to the 'Compile Sources' build phase under the main target.  In the "Groups & Files" list, open the "Targets" and the "SBSendEmail" target  and the Compile Sources build phase items by clicking on the arrows to the left of them.  Then, drag the Mail.app from the project files group into the Compile Sources.
+After you have added the target application to your project, you must also add it to the main target's Compile Sources.  You can do that by adding the application to the 'Compile Sources' build phase under the main target.
 
 
 
 
 5. Add the Scripting Bridge framework to your project.
 
-Turn down the "Frameworks" group in the Groups & Files area, and then control-click (or right click) on the "Linked Frameworks" sub-group.  Select "Add > Existing Frameworks..." from the pop-up menu.  Then, add the "ScriptingBridge.framework" (/System/Library/Frameworks/ScriptingBridge.framework) to the project.  
+In the Build Phases of the main target, expand the group titled "Link With Libraries".  Click the + button and select the ScriptingBridge.framework and click the Add button.
 
 
 
@@ -136,24 +91,18 @@ You can edit the Info.plist file by either clicking on its icon in the resources
 
 
 
-7. Make sure the Target SDK is set to Mac OS X 10.5
 
-You won't have to change this setting for this project, but if you are adding Scripting Bridge to another project that you started an earlier version of the Mac OS than Mac OS X 10.5, then you will need to update the Target SDK for the project.  In the Groups & Files view, select the SBSendEmail project icon at the top of the list and then open the information window.  Under the General tab, change the Cross-Develop Using Target SDK: setting to Mac OS X 10.5.
-
-
-
-
-8. Build your project.
+7. Build your project.
 
 If you have followed the steps above, Xcode will generate the Scripting Bridge source for your project.  They will be put inside of your build folder in a place where the linker and compiler can find them.  
 
 The build rule that we installed will create a .h file with the same name as the application.  For example, if you added Mail to our project, then the build rule will create Mail.h.  The files will be created inside of the build directory in the DerivedSources directory where the compiler can find them.
 
 For the Debug build, the Mail.h file will be located in this sub folder of the build directory:
-/build/SBSendEmail.build/Debug/SBSendEmail.build/DerivedSources/Mail.h
+/build/Intermediates/SBSendEmail.build/Debug/SBSendEmail.build/DerivedSources/Mail.h
 
 For the Release build, the Mail.h file will be located in this sub folder of the build directory:
-/build/SBSendEmail.build/Release/SBSendEmail.build/DerivedSources/Mail.h
+/build/Intermediates/SBSendEmail.build/Release/SBSendEmail.build/DerivedSources/Mail.h
 
 A convenient way for you to open and inspect these files is to use the 'Open Quickly' command in the file menu.  For most purposes, the .h file will contain most of the interesting information so to view that file you open the 'Mail.h' file.  
 
@@ -162,7 +111,7 @@ In some cases, depending on what frameworks are in your project, the 'Open Quick
 
 
 
-9. Add in the Mail's Scripting Bridge header.
+8. Add in the Mail's Scripting Bridge header.
 
 In the file Controller.m, we have added the import statement '#import "Mail.h"' near the top of the file below '#import "Controller.h"'.  This will include all of the Scripting Bridge definitions for the Mail.
 
@@ -177,7 +126,7 @@ In your own application, of course, you would import the Mail.h file in the file
 
 
 
-10. The email sending code
+9. The email sending code
 
 So far, the preceeding steps have described how to set up a project to use Scripting Bridge to target the Mail application.  This sample illustrates how to send an email and the code to do that is relatively simple.  In this section, we'll talk about the code in the -sendEmailMessage: method of the Controller class.
 
@@ -187,51 +136,77 @@ Here is the method itself:
 - (IBAction)sendEmailMessage:(id)sender {
 
         /* create a Scripting Bridge object for talking to the Mail application */
-    MailApplication *mail = [SBApplication
-            applicationWithBundleIdentifier:@"com.apple.Mail"];
-    
+    MailApplication *mail = [SBApplication applicationWithBundleIdentifier:@"com.apple.Mail"];
+
+        /* set ourself as the delegate to receive any errors */
+    mail.delegate = self;
+
         /* create a new outgoing message object */
-    MailOutgoingMessage *emailMessage =
-            [[[mail classForScriptingClass:@"outgoing message"] alloc]
-        initWithProperties:
-            [NSDictionary dictionaryWithObjectsAndKeys:
-                [self.subjectField stringValue], @"subject",
-                [[self.messageContent textStorage] string], @"content",
-                nil]];
-                
+    MailOutgoingMessage *emailMessage = [[[mail classForScriptingClass:@"outgoing message"] alloc] initWithProperties:
+                                            [NSDictionary dictionaryWithObjectsAndKeys:
+                                                [self.subjectField stringValue], @"subject",
+                                                [[self.messageContent textStorage] string], @"content",
+                                                nil]];
+
+        /* Handle a nil value gracefully. */
+    if(!emailMessage)
+        return;
+
         /* add the object to the mail app  */
     [[mail outgoingMessages] addObject: emailMessage];
-    
+
         /* set the sender, show the message */
     emailMessage.sender = [self.fromField stringValue];
     emailMessage.visible = YES;
-                
+
         /* create a new recipient and add it to the recipients list */
-    MailToRecipient *theRecipient =
-            [[[mail classForScriptingClass:@"to recipient"] alloc]
-        initWithProperties:
-            [NSDictionary dictionaryWithObjectsAndKeys:
-                [self.toField stringValue], @"address",
-                nil]];
+    MailToRecipient *theRecipient = [[[mail classForScriptingClass:@"to recipient"] alloc] initWithProperties:
+                                            [NSDictionary dictionaryWithObjectsAndKeys:
+                                                [self.toField stringValue], @"address",
+                                                nil]];
+        /* Handle a nil value gracefully. */
+    if(!theRecipient)
+        return;
     [emailMessage.toRecipients addObject: theRecipient];
-    
+    [theRecipient release];
+
         /* add an attachment, if one was specified */
     NSString *attachmentFilePath = [self.fileAttachmentField stringValue];
     if ( [attachmentFilePath length] > 0 ) {
-    
+        MailAttachment *theAttachment;
+
+            /* In Snow Leopard, the fileName property requires an NSString representing the path to the 
+             * attachment.  In Lion, the property has been changed to require an NSURL.   */
+        SInt32 osxMinorVersion;
+        Gestalt(gestaltSystemVersionMinor, &osxMinorVersion);
+
             /* create an attachment object */
-        MailAttachment *theAttachment = [[[mail
-            classForScriptingClass:@"attachment"] alloc]
-                initWithProperties:
-                    [NSDictionary dictionaryWithObjectsAndKeys:
-                        attachmentFilePath, @"fileName",
-                        nil]];
-                        
+        if(osxMinorVersion >= 7)
+            theAttachment = [[[mail classForScriptingClass:@"attachment"] alloc] initWithProperties:
+                                    [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [NSURL URLWithString:attachmentFilePath], @"fileName",
+                                        nil]];
+        else
+                /* The string we read from the text field is a URL so we must create an NSURL instance with it
+                 * and retrieve the old style file path from the NSURL instance. */
+            theAttachment = [[[mail classForScriptingClass:@"attachment"] alloc] initWithProperties:
+                                    [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [[NSURL URLWithString:attachmentFilePath] path], @"fileName",
+                                        nil]];
+
+            /* Handle a nil value gracefully. */
+        if(!theAttachment)
+            return;
+
             /* add it to the list of attachments */
         [[emailMessage.content attachments] addObject: theAttachment];
+
+        [theAttachment release];
     }
         /* send the message */
     [emailMessage send];
+
+    [emailMessage release];
 }
 
 
@@ -268,7 +243,7 @@ for ( NSString* nthPath in attachmentPaths ) {
         classForScriptingClass:@"attachment"] alloc]
             initWithProperties:
                 [NSDictionary dictionaryWithObjectsAndKeys:
-                    nthPath, @"fileName",
+                    [NSURL urlWithString:nthPath], @"fileName",
                     nil]];
                     
         /* add it to the list of attachments */
@@ -293,3 +268,25 @@ There are some other Scripting Bridge samples available including ScriptingBridg
 
 
 
+===========================================================================
+BUILD REQUIREMENTS
+
+Xcode 3.2, Mac OS X 10.6 Snow Leopard or later.
+
+===========================================================================
+RUNTIME REQUIREMENTS
+
+Mac OS X 10.6 Snow Leopard or later.
+
+===========================================================================
+CHANGES FROM PREVIOUS VERSIONS
+
+Version 1.1
+- Updated attachment code.
+- Updated setup instructions in the ReadMe.
+- Project updated for Xcode 4.
+Version 1.0
+- Initial Version
+
+===========================================================================
+Copyright (C) 2008-2011 Apple Inc. All rights reserved.
